@@ -3,18 +3,13 @@ package before.models;
 public class Librarian extends User {
 	private String department;
 	private String phone;
-	private String branchId;
 	private String branchName;
-	private String branchAddress;
 	
-	public Librarian(int id, UserInfo userInfo, String department, String phone, 
-			String branchId, String branchName, String branchAddress) {
+	public Librarian(int id, UserInfo userInfo, String department, String phone, String branchName) {
 		super(id, userInfo);
 		this.department = department;
 		this.phone = phone;
-		this.branchId = branchId;
 		this.branchName = branchName;
-		this.branchAddress = branchAddress;
 	}
 	
 	// Getters and Setters
@@ -30,23 +25,11 @@ public class Librarian extends User {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public String getBranchId() {
-		return branchId;
-	}
-	public void setBranchId(String branchId) {
-		this.branchId = branchId;
-	}
 	public String getBranchName() {
 		return branchName;
 	}
 	public void setBranchName(String branchName) {
 		this.branchName = branchName;
-	}
-	public String getBranchAddress() {
-		return branchAddress;
-	}
-	public void setBranchAddress(String branchAddress) {
-		this.branchAddress = branchAddress;
 	}
 	
 	@Override

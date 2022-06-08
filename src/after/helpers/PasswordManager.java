@@ -11,6 +11,7 @@ import javax.crypto.spec.PBEKeySpec;
 public class PasswordManager {
 	private static final Random RANDOM = new SecureRandom();
     private static final String ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    private static final String SALT = "fgtqrPjOTVREroGPd8CbLTRR8TDrMP";
     private static final int ITERATIONS = 10000;
     private static final int KEY_LENGTH = 256;
     
@@ -35,9 +36,10 @@ public class PasswordManager {
         }
     }
     
-    public static String getSecurePassword(String password, String salt) {
+    public static String getSecurePassword(String password) {
+    	
         String returnValue = null;
-        byte[] securePassword = hash(password.toCharArray(), salt.getBytes());
+        byte[] securePassword = hash(password.toCharArray(), SALT.getBytes());
  
         returnValue = Base64.getEncoder().encodeToString(securePassword);
  
@@ -45,12 +47,12 @@ public class PasswordManager {
     }
     
     public static boolean verifyPassword(String providedPassword,
-            String securedPassword, String salt)
+            String securedPassword)
     {
         boolean returnValue = false;
         
         // Generate New secure password with the same salt
-        String newSecurePassword = getSecurePassword(providedPassword, salt);
+        String newSecurePassword = getSecurePassword(providedPassword);
         
         // Check if two passwords are equal
         returnValue = newSecurePassword.equalsIgnoreCase(securedPassword);

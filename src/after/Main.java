@@ -5,6 +5,7 @@ import java.util.Vector;
 
 import after.Main;
 import after.helpers.PasswordManager;
+import after.models.Librarian;
 import after.models.User;
 
 public class Main {
@@ -12,6 +13,7 @@ public class Main {
 	Vector<User> users = new Vector<>();
 	
 	public Main() {
+		registerLibrarianManually();
 		displayAuthMenu();
 	}
 
@@ -73,9 +75,10 @@ public class Main {
 	}
 	
 	private void handleLogin(int loginType) {
+		sc.nextLine();
 		System.out.print("Enter username: ");
 		String username = sc.nextLine();
-		System.out.println("Enter password");
+		System.out.print("Enter password: ");
 		String password = sc.nextLine();
 		
 		for (User user : users) {
@@ -90,28 +93,70 @@ public class Main {
 				default:
 					break;
 				}
+			} else {
+				System.out.println("user not found or invalid password");
 			}
 		}
-		
-		System.out.println("User not found");
 		return;
 	}
 	
 	private boolean isCorrectPassword(String plain, String hashed) {
-		String salt = PasswordManager.getSalt(30);
-		return PasswordManager.verifyPassword(plain, hashed, salt);
+		return PasswordManager.verifyPassword(plain, hashed);
 	}
 	
 	private void displayRegisterMenu() {
-		
+		// ini nanti passwordnya di hash dulu yak kyk gini misalnya:
+		String hashedPassword = PasswordManager.getSecurePassword("password");
 	}
 	
 	private void displayAdminMenu(User user) {
 		System.out.println(user.getGreetingMessage());
+		boolean exit = false;
+		
+		do {
+			System.out.println("Admin menu");
+			System.out.println("3. Exit");
+			System.out.print("> ");
+			int choice = sc.nextInt();
+			
+			switch (choice) {
+			case 3:
+				exit = true;
+				break;
+			default:
+				break;
+			} 
+			
+		} while(!exit);
 	}
 	
 	private void displayStudentMenu(User user) {
 		System.out.println(user.getGreetingMessage());
+		
+		boolean exit = false;
+		
+		do {
+			System.out.println("Student menu");
+			System.out.println("3. Exit");
+			System.out.print("> ");
+			int choice = sc.nextInt();
+			
+			switch (choice) {
+			case 3:
+				exit = true;
+				break;
+			default:
+				break;
+			} 
+			
+		} while(!exit);
+	}
+	
+	private void registerLibrarianManually() {
+        String hashedPassword = PasswordManager.getSecurePassword("password");
+        
+		Librarian dummyAdmin = new Librarian(1, "Bambang", "male", "bambang", hashedPassword, "General", "08123612487", "Jakarta");
+		users.add(dummyAdmin);
 	}
 
 }
