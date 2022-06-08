@@ -1,7 +1,6 @@
 package before.models;
 
 public class EBook {
-
 	private int id;
 	private String title;
 	private String description;
@@ -12,9 +11,6 @@ public class EBook {
 	private String url;
 	private String fileFormat;
 	private float fileSize;
-
-	public EBook() {
-	}
 
 	public EBook(int id, String title, String description, int totalPages, String authorName, int authorAge,
 			String authorDescription, String url, String fileFormat, float fileSize) {
@@ -37,10 +33,10 @@ public class EBook {
 		System.out.println();
 	}
 	
-	public EBook createEbook(int id, String title, String description, int totalPages, String authorName, int authorAge,
-			String authorDescription, String url, String fileFormat, float fileSize) {
-		return new EBook(id, title, description, totalPages, authorName, authorAge,
-				 authorDescription, url, fileFormat, fileSize);
+	public void updateAuthor(String authorName, int authorAge, String authorDescription) {
+		this.authorName = authorName;
+		this.authorAge = authorAge;
+		this.authorDescription = authorDescription;
 	}
 	
 	public void getEBookDetails() {
@@ -73,39 +69,30 @@ public class EBook {
 	public void updateId(int id) {
 		this.id = id;
 	}
-	
 	public void updateTitle(String title) {
 		this.title = title;
 	}
-	
 	public void updateDescription(String description) {
 		this.description = description;	
 	}
-	
 	public void updateTotalPages(int totalPages) {
 		this.totalPages = totalPages;
 	}
-	
 	public void updateAuthorName(String authorName) {
 		this.authorName = authorName;
 	}
-	
 	public void updateAuthorAge(int authorAge) {
 		this.authorAge = authorAge;
 	}
-	
 	public void updateAuthorDescription(String authorDescription) {
 		this.authorDescription = authorDescription;
 	}
-	
 	public void updateUrl(String url) {
 		this.url = url;
 	}
-	
 	public void updateFileFormat(String fileFormat) {
 		this.fileFormat = fileFormat;
 	}
-	
 	public void updateFileSize(float fileSize) {
 		this.fileSize = fileSize;
 	}
@@ -114,79 +101,60 @@ public class EBook {
 	public int getId() {
 		return id;
 	}
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
 	public String getTitle() {
 		return title;
 	}
-
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
 	public String getDescription() {
 		return description;
 	}
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
 	public int getTotalPages() {
 		return totalPages;
 	}
-
 	public void setTotalPages(int totalPages) {
 		this.totalPages = totalPages;
 	}
-
 	public String getAuthorName() {
 		return authorName;
 	}
-
 	public void setAuthorName(String authorName) {
 		this.authorName = authorName;
 	}
-
 	public int getAuthorAge() {
 		return authorAge;
 	}
-
 	public void setAuthorAge(int authorAge) {
 		this.authorAge = authorAge;
 	}
-
 	public String getAuthorDescription() {
 		return authorDescription;
 	}
-
 	public void setAuthorDescription(String authorDescription) {
 		this.authorDescription = authorDescription;
 	}
-
 	public String getUrl() {
 		return url;
 	}
-
 	public void setUrl(String url) {
 		this.url = url;
 	}
-
 	public String getFileFormat() {
 		return fileFormat;
 	}
-
 	public void setFileFormat(String fileFormat) {
 		this.fileFormat = fileFormat;
 	}
-
 	public float getFileSize() {
 		return fileSize;
 	}
-
 	public void setFileSize(float fileSize) {
 		this.fileSize = fileSize;
 	}
