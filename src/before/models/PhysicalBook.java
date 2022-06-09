@@ -35,6 +35,7 @@ public class PhysicalBook {
 	}
 	
 	public void increaseStockBy(int amount) {
+		//check if amount greater than 0
 		if(amount >= 0) {
 			this.stock += amount;			
 		} else {
@@ -43,6 +44,8 @@ public class PhysicalBook {
 	}
 	
 	public void decreaseStockBy(int amount) {
+		//check if amount greater than 0 and 
+		//check if there is enough stock to be decreased by amount
 		if((stock-amount) >= 0 && amount >= 0) {
 			this.stock -= amount;			
 		} else {
