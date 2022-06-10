@@ -35,6 +35,13 @@ public class Librarian extends User {
 	@Override
 	public String getGreetingMessage() {
 		String prefix;
+		
+		if(getUserInfo().getGender() == "male") {
+			prefix = "Sir, " + getUserInfo().getName();
+		} else if(getUserInfo().getGender() == "female") {
+			prefix = "Miss, " + getUserInfo().getName();
+		}
+		
 		switch(getUserInfo().getGender()) {
 			case "male":
 				prefix = "Mr. ";

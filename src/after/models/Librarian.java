@@ -35,6 +35,7 @@ public class Librarian extends User {
 	@Override
 	public String getGreetingMessage() {
 		String prefix;
+		
 		switch(getGender()) {
 			case "male":
 				prefix = "Mr. ";
