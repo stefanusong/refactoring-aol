@@ -5,8 +5,7 @@ import java.util.Vector;
 
 import after.Main;
 import after.helpers.PasswordManager;
-import after.models.Librarian;
-import after.models.User;
+import after.models.*;
 
 public class Main {
 	Scanner sc = new Scanner(System.in);
