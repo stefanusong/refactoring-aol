@@ -17,13 +17,13 @@ public abstract class Book {
 	}
 
 	public void getBookDetails() {
-		System.out.print(id + " \t");
-		System.out.print(title + " \t");
-		System.out.print(description + " \t");
-		System.out.print(totalPages + " \t");
-		System.out.print(getAuthor().getAuthorName()+ " \t");
-		System.out.print(getAuthor().getAuthorAge()+ " \t");
-		System.out.print(getAuthor().getAuthorDescription()+ " \t");
+		System.out.printf("[%d]\n", id);
+		System.out.println("> Title: " + title);
+		System.out.println("> Description: " + description);
+		System.out.println("> Total Pages: " + totalPages);
+		System.out.println("> Author Name: " + getAuthor().getAuthorName());
+		System.out.println("> Author Age: " + getAuthor().getAuthorAge());
+		System.out.println("> Author Description: " + getAuthor().getAuthorDescription());
 	}
 	
 	public void updateBook(int id, String title, String description, int totalPages, 

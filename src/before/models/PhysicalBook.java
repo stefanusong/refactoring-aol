@@ -55,17 +55,28 @@ public class PhysicalBook {
 	}
 	
 	public void getPhysicalBookDetails() {
-		System.out.print(id + " \t");
-		System.out.print(title + " \t");
-		System.out.print(description + " \t");
-		System.out.print(totalPages + " \t");
-		System.out.print(authorName + " \t");
-		System.out.print(authorAge + " \t");
-		System.out.print(authorDescription + " \t");
-		System.out.print(stock + " \t");
-		System.out.print(isHardCover+ " \t");
-		System.out.print(isColored + " \t");
-		System.out.println(condition + " \t");
+		System.out.printf("[%d]\n", id);
+		System.out.println("> Title: " + title);
+		System.out.println("> Description: " + description);
+		System.out.println("> Total Pages: " + totalPages);
+		System.out.println("> Author Name: " + authorName);
+		System.out.println("> Author Age: " + authorAge);
+		System.out.println("> Author Description: " + authorDescription);
+		System.out.println("> Book Stock: " + stock);
+		if (isHardCover == true) {
+			System.out.println("> Book Cover: HARD");
+		} else {
+			System.out.println("> Book Cover: SOFT");
+		}
+		
+		if (isColored == true) {
+			System.out.println("> Book Color: Colorful");
+		} else {
+			System.out.println("> Book Color: Black n White");
+		}
+		
+		System.out.println("> Book Condition: " + condition);
+		System.out.println("===========\n");
 	}
 	
 	public void updatePhysicalBook(int id, String title, String description, int totalPages, String authorName, int authorAge,

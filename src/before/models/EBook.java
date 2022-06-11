@@ -40,16 +40,17 @@ public class EBook {
 	}
 	
 	public void getEBookDetails() {
-		System.out.print(id + " \t");
-		System.out.print(title + " \t");
-		System.out.print(description + " \t");
-		System.out.print(totalPages + " \t");
-		System.out.print(authorName + " \t");
-		System.out.print(authorAge + " \t");
-		System.out.print(authorDescription + " \t");
-		System.out.print(url + " \t");
-		System.out.print(fileFormat + " \t");
-		System.out.println(fileSize + " \t");
+		System.out.printf("[%d]\n", id);
+		System.out.println("> Title: " + title);
+		System.out.println("> Description: " + description);
+		System.out.println("> Total Pages: " + totalPages);
+		System.out.println("> Author Name: " + authorName);
+		System.out.println("> Author Age: " + authorAge);
+		System.out.println("> Author Description: " + authorDescription);
+		System.out.println("> URL: " + url);
+		System.out.println("> File Format: " + fileFormat);
+		System.out.println("> File Size: " + fileSize + "mb");
+		System.out.println("===========\n");
 	}
 	
 	public void updateEBook(int id, String title, String description, int totalPages, String authorName, int authorAge,

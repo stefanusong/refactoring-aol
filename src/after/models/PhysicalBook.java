@@ -39,10 +39,21 @@ public class PhysicalBook extends Book{
 	
 	public void getBookDetails() {
 		super.getBookDetails();
-		System.out.print(stock + " \t");
-		System.out.print(isHardCover+ " \t");
-		System.out.print(isColored + " \t");
-		System.out.println(condition + " \t");
+		System.out.println("> Book Stock: " + stock);
+		if (isHardCover == true) {
+			System.out.println("> Book Cover: HARD");
+		} else {
+			System.out.println("> Book Cover: SOFT");
+		}
+		
+		if (isColored == true) {
+			System.out.println("> Book Color: Colorful");
+		} else {
+			System.out.println("> Book Color: Black n White");
+		}
+		
+		System.out.println("> Book Condition: " + condition);
+		System.out.println("===========\n");
 	}
 	
 	public void updateBook(int id, String title, String description, int totalPages, String authorName, int authorAge,

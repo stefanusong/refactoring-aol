@@ -1,6 +1,6 @@
 package before;
 
-import java.util.Iterator;
+import java.time.temporal.ChronoUnit;
 import java.util.Scanner;
 import java.util.Vector;
 
@@ -11,6 +11,7 @@ public class Main {
 	Vector<User> users = new Vector<>();
 	Vector<EBook> eBooks = new Vector<>();
 	Vector<PhysicalBook> physicalBooks = new Vector<>();
+	Vector<Borrowing> borrowings = new Vector<>();
 
 	public Main() {
 		boolean exit = false;
@@ -118,16 +119,111 @@ public class Main {
 							System.out.println("All E-Books");
 							System.out.println("===========");
 							for (EBook eBook : eBooks) {
-								System.out.printf("[%d]", eBook.getId());
-								System.out.println("> Title: " + eBook.getTitle());
-								System.out.println("> Description: " + eBook.getDescription());
-								System.out.println("> Total Pages: " + eBook.getTotalPages());
-								System.out.println("> Author Name: " + eBook.getAuthorName());
-								System.out.println("> File Format: " + eBook.getFileFormat());
-								System.out.println("> File Size: " + eBook.getFileSize());
-								System.out.println("===========\n");
+								eBook.getEBookDetails();
+							}
+							System.out.println("All Physical Books");
+							System.out.println("===========");
+							for (PhysicalBook physicalBook : physicalBooks) {
+								physicalBook.getPhysicalBookDetails();
 							}
 							break;
+						case 2:
+							System.out.println("All E-Books");
+							System.out.println("===========");
+							for (EBook eBook : eBooks) {
+								eBook.getEBookDetails();
+							}
+							System.out.println("All Physical Books");
+							System.out.println("===========");
+							for (PhysicalBook physicalBook : physicalBooks) {
+								physicalBook.getPhysicalBookDetails();
+							}
+							
+							sc.nextLine();
+							System.out.println("Borrowing");
+							System.out.print("Enter the book ID: ");
+							int ID = Integer.parseInt(sc.nextLine());
+							
+							int idBorrowing;
+							
+							for (EBook eBook : eBooks) {
+								if (eBook.getId() == ID) {
+									idBorrowing = borrowings.size() + 1;
+									
+									eBook.download();
+									Borrowing borrowEB = new Borrowing(idBorrowing, user, eBook, null, java.time.LocalDate.now(), java.time.LocalDate.now().plusDays(14));
+									borrowings.add(borrowEB);
+									break;
+								}
+							}
+							for (PhysicalBook physicalBook : physicalBooks) {
+								if (physicalBook.getId() == ID) {
+									idBorrowing = borrowings.size() + 1;
+									
+									physicalBook.decreaseStockBy(1);
+									System.out.println("Current stock: " + physicalBook.getStock());
+									
+									Borrowing borrowP = new Borrowing(idBorrowing, user, null, physicalBook, java.time.LocalDate.now(), java.time.LocalDate.now().plusDays(14));
+									borrowings.add(borrowP);
+									break;
+								}
+							}
+							break;
+						case 3:
+							System.out.println("All borrowing students");
+							for (Borrowing borrowing : borrowings) {
+								long duration = ChronoUnit.DAYS.between(java.time.LocalDate.now(), borrowing.getEndDate());
+								int howLong = (int)duration;
+								
+								if (borrowing.geteBook() != null) {
+									System.out.printf("[%d]. BOOK = %s | Student = %s (%d days left)\n", borrowing.getId(), borrowing.geteBook().getTitle(), borrowing.getUser().getUserInfo().getName(), howLong);
+								}else {
+									System.out.printf("[%d]. BOOK = %s | Student = %s (%d days left)\n", borrowing.getId(), borrowing.getPhysicalBook().getTitle(), borrowing.getUser().getUserInfo().getName(), howLong);
+								}
+							}
+							System.out.println();
+							break;
+						case 4:
+							System.out.println("Your returning station");
+							for (Borrowing borrowing : borrowings) {
+								if (borrowing.getUser() == user) {
+									if (borrowing.geteBook() != null) {
+										System.out.printf("[%d]. BOOK = %s | Student = %s\n", borrowing.getId(), borrowing.geteBook().getTitle(), borrowing.getUser().getUserInfo().getName());
+									} else {
+										System.out.printf("[%d]. BOOK = %s | Student = %s\n", borrowing.getId(), borrowing.getPhysicalBook().getTitle(), borrowing.getUser().getUserInfo().getName());
+									}
+									
+								}
+							}
+							
+							sc.nextLine();
+							noData = false;
+							System.out.print("Enter the borrowing ID: ");
+							ID = Integer.parseInt(sc.nextLine());
+							
+							for (Borrowing borrowing : borrowings) {
+								if (borrowing.getId() == ID) {
+									idBorrowing = borrowings.indexOf(borrowing);
+									
+									if (borrowing.getPhysicalBook() != null) {
+										borrowing.getPhysicalBook().increaseStockBy(1);
+										System.out.println("Current stock: " + borrowing.getPhysicalBook().getStock());
+									} else {
+										System.out.println("Book has been returned");
+									}
+									borrowings.remove(idBorrowing);
+									
+									noData = false;
+									break;
+								}
+								
+								noData = true;
+							}
+							if (noData) {
+								System.out.println("There's no data for this ID");
+							}
+						case 5:
+							return;
 						default:
 							break;
 						} 
@@ -153,45 +249,13 @@ public class Main {
 							System.out.println("All E-Books");
 							System.out.println("===========");
 							for (EBook eBook : eBooks) {
-								System.out.printf("[%d]\n", eBook.getId());
-								System.out.println("> Title: " + eBook.getTitle());
-								System.out.println("> Description: " + eBook.getDescription());
-								System.out.println("> Total Pages: " + eBook.getTotalPages());
-								System.out.println("> Author Name: " + eBook.getAuthorName());
-								System.out.println("> Author Age: " + eBook.getAuthorAge());
-								System.out.println("> Author Description: " + eBook.getAuthorDescription());
-								System.out.println("> URL: " + eBook.getUrl());
-								System.out.println("> File Format: " + eBook.getFileFormat());
-								System.out.println("> File Size: " + eBook.getFileSize() + "mb");
-								System.out.println("===========\n");
+								eBook.getEBookDetails();
 							}
 							
 							System.out.println("\nAll Physical Books");
 							System.out.println("===========");
 							for (PhysicalBook physicalBook : physicalBooks) {
-								System.out.printf("[%d]\n", physicalBook.getId());
-								System.out.println("> Title: " + physicalBook.getTitle());
-								System.out.println("> Description: " + physicalBook.getDescription());
-								System.out.println("> Total Pages: " + physicalBook.getTotalPages());
-								System.out.println("> Author Name: " + physicalBook.getAuthorName());
-								System.out.println("> Author Age: " + physicalBook.getAuthorAge());
-								System.out.println("> Author Description: " + physicalBook.getAuthorDescription());
-								System.out.println("> Book Stock: " + physicalBook.getStock());
-								
-								if (physicalBook.getIsHardCover() == true) {
-									System.out.println("> Book Cover: HARD");
-								} else {
-									System.out.println("> Book Cover: SOFT");
-								}
-								
-								if (physicalBook.getIsColored() == true) {
-									System.out.println("> Book Color: Colorful");
-								} else {
-									System.out.println("> Book Color: Black n White");
-								}
-								
-								System.out.println("> Book Condition: " + physicalBook.getCondition());
-								System.out.println("===========\n");
+								physicalBook.getPhysicalBookDetails();
 							}
 							break;
 						case 2:
@@ -268,7 +332,7 @@ public class Main {
 									}
 									sc.nextLine();
 									System.out.print("Enter book condition: ");
-									String condition = sc.nextLine();
+									String condition = sc.next();
 									
 									ID = eBooks.size() + physicalBooks.size() + 1;
 									
@@ -285,45 +349,13 @@ public class Main {
 							System.out.println("All E-Books");
 							System.out.println("===========");
 							for (EBook eBook : eBooks) {
-								System.out.printf("[%d]\n", eBook.getId());
-								System.out.println("> Title: " + eBook.getTitle());
-								System.out.println("> Description: " + eBook.getDescription());
-								System.out.println("> Total Pages: " + eBook.getTotalPages());
-								System.out.println("> Author Name: " + eBook.getAuthorName());
-								System.out.println("> Author Age: " + eBook.getAuthorAge());
-								System.out.println("> Author Description: " + eBook.getAuthorDescription());
-								System.out.println("> URL: " + eBook.getUrl());
-								System.out.println("> File Format: " + eBook.getFileFormat());
-								System.out.println("> File Size: " + eBook.getFileSize() + "mb");
-								System.out.println("===========\n");
+								eBook.getEBookDetails();
 							}
 							
 							System.out.println("\nAll Physical Books");
 							System.out.println("===========");
 							for (PhysicalBook physicalBook : physicalBooks) {
-								System.out.printf("[%d]\n", physicalBook.getId());
-								System.out.println("> Title: " + physicalBook.getTitle());
-								System.out.println("> Description: " + physicalBook.getDescription());
-								System.out.println("> Total Pages: " + physicalBook.getTotalPages());
-								System.out.println("> Author Name: " + physicalBook.getAuthorName());
-								System.out.println("> Author Age: " + physicalBook.getAuthorAge());
-								System.out.println("> Author Description: " + physicalBook.getAuthorDescription());
-								System.out.println("> Book Stock: " + physicalBook.getStock());
-								
-								if (physicalBook.getIsHardCover() == true) {
-									System.out.println("> Book Cover: HARD");
-								} else {
-									System.out.println("> Book Cover: SOFT");
-								}
-								
-								if (physicalBook.getIsColored() == true) {
-									System.out.println("> Book Color: Colorful");
-								} else {
-									System.out.println("> Book Color: Black n White");
-								}
-								
-								System.out.println("> Book Condition: " + physicalBook.getCondition());
-								System.out.println("===========\n");
+								physicalBook.getPhysicalBookDetails();
 							}
 							
 							sc.nextLine();
@@ -334,7 +366,6 @@ public class Main {
 							int idUpdate, totalPageUpdate, authAgeUpdate;
 							String titleUpdate, descUpdate, authNameUpdate, authDescUpdate;
 							
-							boolean noEBook = false, noPhysical = false;
 							for (EBook eBook : eBooks) {
 								if (eBook.getId() == ID) {
 									idUpdate = eBooks.indexOf(eBook);
@@ -358,12 +389,10 @@ public class Main {
 									Float fileSizeUpdate = sc.nextFloat();
 									
 									System.out.println("\nBook has been updated");
-									EBook updateEBook = new EBook(ID, titleUpdate, descUpdate, totalPageUpdate, authNameUpdate, authAgeUpdate, authDescUpdate, urlUpdate, fileFormatUpdate, fileSizeUpdate);
-									eBooks.set(idUpdate, updateEBook);
+									EBook eBookUpdate = new EBook(ID, titleUpdate, descUpdate, totalPageUpdate, authNameUpdate, authAgeUpdate, authDescUpdate, urlUpdate, fileFormatUpdate, fileSizeUpdate);
+									eBooks.set(idUpdate, eBookUpdate);
 									break;
 								}
-								
-								noEBook = true;
 							}
 							for (PhysicalBook physicalBook : physicalBooks) {
 								if (physicalBook.getId() == ID) {
@@ -410,18 +439,64 @@ public class Main {
 									
 									break;
 								}
-								
-								noPhysical = true;
-							}
-							if (noEBook && noPhysical) {
-								System.out.println("The ID you've mentioned doesn't exist");
 							}
 							break;
 						case 4:
+							System.out.println("All E-Books");
+							System.out.println("===========");
+							for (EBook eBook : eBooks) {
+								eBook.getEBookDetails();
+							}
+							
+							System.out.println("\nAll Physical Books");
+							System.out.println("===========");
+							for (PhysicalBook physicalBook : physicalBooks) {
+								physicalBook.getPhysicalBookDetails();
+							}
+							
+							sc.nextLine();
 							System.out.println("Delete");
+							System.out.print("Enter the book ID: ");
+							ID = Integer.parseInt(sc.nextLine());
+							
+							int idDelete;
+							
+							for (EBook eBook : eBooks) {
+								if (eBook.getId() == ID) {
+									idDelete = eBooks.indexOf(eBook);
+									
+									System.out.println("\nBook has been deleted");
+									eBooks.remove(eBook);
+									break;
+								}
+							}
+							for (PhysicalBook physicalBook : physicalBooks) {
+								if (physicalBook.getId() == ID) {
+									idDelete = physicalBooks.indexOf(physicalBook);
+									
+									System.out.println("\nBook has been deleted");
+									physicalBooks.remove(physicalBook);
+									break;
+								}
+								
+							}
+							break;
+						case 5:
+							System.out.println("All borrowing students");
+							for (Borrowing borrowing : borrowings) {
+								long duration = ChronoUnit.DAYS.between(java.time.LocalDate.now(), borrowing.getEndDate());
+								int howLong = (int) duration;
+								
+								if (borrowing.geteBook() != null) {
+									System.out.printf("[%d]. BOOK = %s | Student = %s (%d days left)\n", borrowing.getId(), borrowing.geteBook().getTitle(), borrowing.getUser().getUserInfo().getName(), howLong);
+								}else {
+									System.out.printf("[%d]. BOOK = %s | Student = %s (%d days left)\n", borrowing.getId(), borrowing.getPhysicalBook().getTitle(), borrowing.getUser().getUserInfo().getName(), howLong);
+								}
+							}
+							System.out.println();
 							break;
 						default:
-							break;
+							return;
 						} 
 						
 					} while(choice != 6);
@@ -439,7 +514,7 @@ public class Main {
 		
 		return;
 	}
-	
+
 	private boolean isCorrectPassword(String plain, String hashed) {
 		return User.verifyPassword(plain, hashed);
 	}

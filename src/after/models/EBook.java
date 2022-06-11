@@ -21,9 +21,10 @@ public class EBook extends Book{
 	
 	public void getBookDetails() {
 		super.getBookDetails();
-		System.out.print(url + " \t");
-		System.out.print(fileFormat + " \t");
-		System.out.println(fileSize + " \t");
+		System.out.println("> URL: " + url);
+		System.out.println("> File Format: " + fileFormat);
+		System.out.println("> File Size: " + fileSize + "mb");
+		System.out.println("===========\n");
 	}
 	
 	public void updateBook(int id, String title, String description, int totalPages, String authorName, int authorAge,
